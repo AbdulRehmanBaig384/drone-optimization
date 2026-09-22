@@ -1,0 +1,79 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #020817;
+  --foreground: #e2e8f0;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  min-height: 100vh;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
+/* React Flow overrides */
+.react-flow__attribution {
+  background: transparent !important;
+  color: #475569 !important;
+}
+.react-flow__controls {
+  background: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+}
+.react-flow__controls-button {
+  background: #1e293b !important;
+  border-color: #334155 !important;
+  fill: #94a3b8 !important;
+}
+.react-flow__controls-button:hover {
+  background: #334155 !important;
+}
+
+/* Gradient text utility */
+.gradient-text {
+  background: linear-gradient(135deg, #38bdf8, #818cf8);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+/* Glass card */
+.glass-card {
+  background: rgba(15, 23, 42, 0.7);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(51, 65, 85, 0.5);
+  border-radius: 16px;
+}
+
+/* Pulse glow */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }
+}
+.pulse-glow {
+  animation: pulse-glow 2s ease-in-out infinite;
+}

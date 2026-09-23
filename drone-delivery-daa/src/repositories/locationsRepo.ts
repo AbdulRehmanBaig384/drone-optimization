@@ -4,13 +4,21 @@
 import { createServerClient } from '@/lib/supabase/server';
 import type { Location } from '@/types';
 
-export async function getAllLocations(): Promise<Location[]> {
+export async function getAllLocations(retries = 3): Promise<Location[]> {
   const supabase = createServerClient();
   const { data, error } = await supabase
     .from('locations')
     .select('*')
     .order('id');
-  if (error) throw new Error(`locationsRepo.getAllLocations: ${error.message}`);
+    
+  if (error) {
+    if (error.message.includes('JWT issued at future') && retries > 0) {
+      console.warn('Clock drift detected on Supabase server. Retrying...', retries);
+      await new Promise(res => setTimeout(res, 500)); // wait 500ms
+      return getAllLocations(retries - 1);
+    }
+    throw new Error(`locationsRepo.getAllLocations: ${error.message}`);
+  }
   return data as Location[];
 }
 

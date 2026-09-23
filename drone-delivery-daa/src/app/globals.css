@@ -1,10 +1,27 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+
+@theme {
+  --color-bg: #0A1120;
+  --color-bg-elev: #0E1626;
+  --color-surface: #131E36;
+  --color-surface-2: #1A2745;
+  --color-border-theme: #263355;
+  --color-text-main: #E8ECF6;
+  --color-text-dim: #93A0BE;
+  --color-text-faint: #5C6A8C;
+  --color-accent: #41D6FF;
+  --color-energy: #FFB454;
+  --color-critical: #FF6B81;
+  --color-success: #39D98A;
+
+  --font-sans: "IBM Plex Sans", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --font-display: "Space Grotesk", sans-serif;
+}
 
 :root {
-  --background: #020817;
-  --foreground: #e2e8f0;
+  --bg: #0A1120;
+  --text-main: #E8ECF6;
 }
 
 * {
@@ -12,8 +29,8 @@
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
+  background-color: var(--bg);
+  color: var(--text-main);
   min-height: 100vh;
 }
 
@@ -23,39 +40,39 @@ body {
   height: 6px;
 }
 ::-webkit-scrollbar-track {
-  background: #0f172a;
+  background: var(--color-bg);
 }
 ::-webkit-scrollbar-thumb {
-  background: #334155;
+  background: var(--color-surface-2);
   border-radius: 3px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+  background: var(--color-border-theme);
 }
 
 /* React Flow overrides */
 .react-flow__attribution {
   background: transparent !important;
-  color: #475569 !important;
+  color: var(--color-text-faint) !important;
 }
 .react-flow__controls {
-  background: #0f172a;
-  border: 1px solid #334155;
+  background: var(--color-bg-elev);
+  border: 1px solid var(--color-border-theme);
   border-radius: 8px;
   overflow: hidden;
 }
 .react-flow__controls-button {
-  background: #1e293b !important;
-  border-color: #334155 !important;
-  fill: #94a3b8 !important;
+  background: var(--color-surface) !important;
+  border-color: var(--color-border-theme) !important;
+  fill: var(--color-text-dim) !important;
 }
 .react-flow__controls-button:hover {
-  background: #334155 !important;
+  background: var(--color-surface-2) !important;
 }
 
 /* Gradient text utility */
 .gradient-text {
-  background: linear-gradient(135deg, #38bdf8, #818cf8);
+  background: linear-gradient(135deg, var(--color-accent), #818cf8);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -63,16 +80,16 @@ body {
 
 /* Glass card */
 .glass-card {
-  background: rgba(15, 23, 42, 0.7);
+  background: rgba(19, 30, 54, 0.7);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(51, 65, 85, 0.5);
+  border: 1px solid rgba(38, 51, 85, 0.5);
   border-radius: 16px;
 }
 
 /* Pulse glow */
 @keyframes pulse-glow {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(56, 189, 248, 0.4); }
-  50%       { box-shadow: 0 0 0 8px rgba(56, 189, 248, 0); }
+  0%, 100% { box-shadow: 0 0 0 0 rgba(65, 214, 255, 0.4); }
+  50%       { box-shadow: 0 0 0 8px rgba(65, 214, 255, 0); }
 }
 .pulse-glow {
   animation: pulse-glow 2s ease-in-out infinite;

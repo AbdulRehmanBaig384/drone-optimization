@@ -4,18 +4,26 @@
 import { createServerClient } from '@/lib/supabase/server';
 import type { DeliveryRequest, DeliveryCreateInput, DeliveryStatus } from '@/types';
 
-export async function getAllDeliveries(): Promise<DeliveryRequest[]> {
+export async function getAllDeliveries(retries = 3): Promise<DeliveryRequest[]> {
   const supabase = createServerClient();
   const { data, error } = await supabase
     .from('delivery_requests')
     .select('*')
     .order('priority', { ascending: true })
     .order('created_at', { ascending: true });
-  if (error) throw new Error(`deliveriesRepo.getAllDeliveries: ${error.message}`);
+    
+  if (error) {
+    if (error.message.includes('JWT issued at future') && retries > 0) {
+      console.warn('Clock drift detected on Supabase server. Retrying...', retries);
+      await new Promise(res => setTimeout(res, 500));
+      return getAllDeliveries(retries - 1);
+    }
+    throw new Error(`deliveriesRepo.getAllDeliveries: ${error.message}`);
+  }
   return data as DeliveryRequest[];
 }
 
-export async function getPendingDeliveries(): Promise<DeliveryRequest[]> {
+export async function getPendingDeliveries(retries = 3): Promise<DeliveryRequest[]> {
   const supabase = createServerClient();
   const { data, error } = await supabase
     .from('delivery_requests')
@@ -23,7 +31,15 @@ export async function getPendingDeliveries(): Promise<DeliveryRequest[]> {
     .eq('status', 'pending')
     .order('priority', { ascending: true })
     .order('created_at', { ascending: true });
-  if (error) throw new Error(`deliveriesRepo.getPendingDeliveries: ${error.message}`);
+    
+  if (error) {
+    if (error.message.includes('JWT issued at future') && retries > 0) {
+      console.warn('Clock drift detected on Supabase server. Retrying...', retries);
+      await new Promise(res => setTimeout(res, 500));
+      return getPendingDeliveries(retries - 1);
+    }
+    throw new Error(`deliveriesRepo.getPendingDeliveries: ${error.message}`);
+  }
   return data as DeliveryRequest[];
 }
 

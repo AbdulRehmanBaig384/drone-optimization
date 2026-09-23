@@ -51,12 +51,13 @@ export function edgesToRFEdges(
       type: 'straight',
       animated: isHighlighted,
       style: {
-        stroke: isHighlighted ? '#38bdf8' : '#334155',
+        stroke: isHighlighted ? '#41D6FF' : '#263355',
         strokeWidth: isHighlighted ? 3 : 1.5,
+        filter: isHighlighted ? 'drop-shadow(0px 0px 4px rgba(65, 214, 255, 0.8))' : 'none',
       },
       label: `${edge.distance.toFixed(1)}km`,
-      labelStyle: { fill: '#94a3b8', fontSize: 10 },
-      labelBgStyle: { fill: '#0f172a' },
+      labelStyle: { fill: '#5C6A8C', fontSize: 10, fontWeight: 600, fontFamily: 'monospace' },
+      labelBgStyle: { fill: '#0E1626', stroke: '#263355', strokeWidth: 1 },
       data: {
         distance: edge.distance,
         energy_cost: edge.energy_cost,

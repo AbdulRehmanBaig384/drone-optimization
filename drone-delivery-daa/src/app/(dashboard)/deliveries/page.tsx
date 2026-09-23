@@ -2,8 +2,7 @@
 // src/app/(dashboard)/deliveries/page.tsx
 
 import { useEffect, useState, useCallback } from 'react';
-import Navbar from '@/components/layout/Navbar';
-import Sidebar from '@/components/layout/Sidebar';
+// Removed Sidebar and Navbar imports
 import DeliveryForm from '@/components/deliveries/DeliveryForm';
 import DeliveryTable from '@/components/deliveries/DeliveryTable';
 import type { DeliveryRequest, Location } from '@/types';
@@ -21,8 +20,10 @@ export default function DeliveriesPage() {
         fetch('/api/deliveries'),
         fetch('/api/locations'),
       ]);
-      setDeliveries(await dRes.json());
-      setLocations(await lRes.json());
+      const dData = await dRes.json();
+      const lData = await lRes.json();
+      setDeliveries(Array.isArray(dData) ? dData : []);
+      setLocations(Array.isArray(lData) ? lData : []);
     } catch (e) {
       console.error(e);
     } finally {
@@ -37,65 +38,73 @@ export default function DeliveriesPage() {
     loadData();
   }
 
+  async function handleUnassign(id: number) {
+    await fetch('/api/deliveries', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, action: 'unassign' }),
+    });
+    loadData();
+  }
+
   const pending   = deliveries.filter((d) => d.status === 'pending').length;
   const assigned  = deliveries.filter((d) => d.status === 'assigned' || d.status === 'in_flight').length;
   const completed = deliveries.filter((d) => d.status === 'delivered').length;
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="flex-1 flex flex-col">
-        <Navbar />
-        <main className="flex-1 p-6">
-          <div className="flex items-center justify-between mb-6">
-            <div>
-              <h1 className="text-2xl font-bold text-slate-100">Delivery Requests</h1>
-              <p className="text-slate-400 text-sm mt-1">
-                Manage delivery requests — sorted by priority (P1 = most urgent)
-              </p>
-            </div>
-            <button
-              onClick={() => setShowForm((v) => !v)}
-              className="px-4 py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-colors"
-            >
-              {showForm ? 'Cancel' : '+ New Delivery'}
-            </button>
-          </div>
-
-          {/* Stats row */}
-          <div className="flex gap-3 mb-6 flex-wrap">
-            {[
-              { label: 'Pending',   count: pending,   color: 'amber' },
-              { label: 'Active',    count: assigned,  color: 'sky' },
-              { label: 'Completed', count: completed, color: 'emerald' },
-            ].map(({ label, count, color }) => (
-              <div key={label} className={`px-4 py-2 rounded-lg text-sm font-medium bg-${color}-500/10 text-${color}-300 border border-${color}-500/20`}>
-                {label}: <span className="font-bold">{count}</span>
-              </div>
-            ))}
-          </div>
-
-          {showForm && locations.length > 0 && (
-            <div className="mb-6 p-5 rounded-xl border border-slate-700/60 bg-slate-900/70 max-w-sm">
-              <h2 className="text-sm font-semibold text-slate-300 mb-4">New Delivery Request</h2>
-              <DeliveryForm
-                locations={locations}
-                onCreated={() => { setShowForm(false); loadData(); }}
-              />
-            </div>
-          )}
-
-          {loading ? (
-            <div className="text-slate-500 text-sm">Loading deliveries...</div>
-          ) : (
-            <DeliveryTable
-              deliveries={deliveries}
-              locations={locations}
-              onDelete={handleDelete}
-            />
-          )}
-        </main>
+    <>
+      <div className="flex items-center justify-between mb-6 flex-wrap gap-4">
+        <div>
+          <h1 className="text-2xl md:text-3xl font-bold font-display text-text-main">Active Manifests</h1>
+          <p className="text-text-dim text-sm mt-1">
+            Manage delivery requests — sorted by priority (P1 = most urgent)
+          </p>
+        </div>
+        <button
+          onClick={() => setShowForm((v) => !v)}
+          className="px-5 py-2.5 rounded-lg bg-accent/10 hover:bg-accent/20 border border-accent/30 text-accent text-sm font-bold transition-all shadow-[0_0_15px_rgba(65,214,255,0.15)]"
+        >
+          {showForm ? 'Cancel' : '+ New Manifest'}
+        </button>
       </div>
-    </div>
+
+      {/* Stats row */}
+      <div className="flex gap-4 mb-6 flex-wrap">
+        {[
+          { label: 'Pending',   count: pending,   color: 'energy' },
+          { label: 'Active',    count: assigned,  color: 'accent' },
+          { label: 'Completed', count: completed, color: 'success' },
+        ].map(({ label, count, color }) => (
+          <div key={label} className={`px-5 py-2.5 rounded-lg text-sm font-medium bg-${color}/10 text-${color} border border-${color}/20 flex items-center gap-3 shadow-lg shadow-black/20`}>
+            <span className="uppercase tracking-wider text-xs opacity-80">{label}</span>
+            <span className="font-bold font-mono text-lg">{count}</span>
+          </div>
+        ))}
+      </div>
+
+      {showForm && locations.length > 0 && (
+        <div className="mb-6 p-6 rounded-xl border border-border-theme bg-surface max-w-sm shadow-xl">
+          <h2 className="text-sm font-semibold font-display text-text-main mb-4 uppercase tracking-wider">New Delivery Manifest</h2>
+          <DeliveryForm
+            locations={locations}
+            onCreated={() => { setShowForm(false); loadData(); }}
+          />
+        </div>
+      )}
+
+      {loading ? (
+        <div className="text-text-dim text-sm flex items-center gap-2">
+          <div className="w-4 h-4 rounded-full border-2 border-text-dim border-t-transparent animate-spin" />
+          Loading manifests...
+        </div>
+      ) : (
+        <DeliveryTable
+          deliveries={deliveries}
+          locations={locations}
+          onDelete={handleDelete}
+          onUnassign={handleUnassign}
+        />
+      )}
+    </>
   );
 }

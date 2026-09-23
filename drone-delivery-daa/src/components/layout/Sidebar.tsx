@@ -9,21 +9,22 @@ import {
 } from 'lucide-react';
 
 const navItems = [
-  { href: '/',           icon: LayoutDashboard, label: 'Dashboard'  },
-  { href: '/city-map',   icon: Map,             label: 'City Map'   },
-  { href: '/drones',     icon: Bot,             label: 'Drones'     },
-  { href: '/deliveries', icon: Package,         label: 'Deliveries' },
-  { href: '/simulation', icon: PlayCircle,      label: 'Simulation' },
+  { href: '/',           icon: LayoutDashboard, label: 'Dash'  },
+  { href: '/city-map',   icon: Map,             label: 'Map'   },
+  { href: '/drones',     icon: Bot,             label: 'Drones'},
+  { href: '/deliveries', icon: Package,         label: 'Orders'},
+  { href: '/simulation', icon: PlayCircle,      label: 'Sim' },
 ];
 
 export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="w-56 min-h-screen bg-slate-950 border-r border-slate-800 flex flex-col py-6 px-3 gap-1">
-      <p className="text-xs font-semibold text-slate-500 uppercase tracking-wider px-3 mb-3">
-        Navigation
-      </p>
+    <aside className="fixed bottom-0 left-0 right-0 md:top-0 md:bottom-auto md:right-auto md:w-[76px] md:h-screen bg-bg-elev border-t md:border-t-0 md:border-r border-border-theme z-50 flex md:flex-col items-center py-2 md:py-6 px-2 md:px-0 justify-around md:justify-start md:gap-4 shadow-[0_-4px_24px_rgba(0,0,0,0.4)] md:shadow-none">
+      <div className="hidden md:flex w-10 h-10 rounded-xl bg-surface border border-border-theme items-center justify-center mb-4 shadow-lg shadow-black/20">
+        <span className="text-accent text-lg font-display font-bold">D</span>
+      </div>
+      
       {navItems.map(({ href, icon: Icon, label }) => {
         const active = pathname === href;
         return (
@@ -31,27 +32,20 @@ export default function Sidebar() {
             key={href}
             href={href}
             className={cn(
-              'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-all duration-150',
+              'relative flex flex-col items-center justify-center w-14 h-14 md:w-[60px] md:h-[60px] rounded-xl transition-all duration-200',
               active
-                ? 'bg-sky-500/15 text-sky-300 border border-sky-500/30'
-                : 'text-slate-400 hover:text-slate-100 hover:bg-slate-800/70',
+                ? 'bg-accent/10 text-accent'
+                : 'text-text-faint hover:text-text-main hover:bg-surface-2',
             )}
           >
-            <Icon size={16} className={active ? 'text-sky-400' : ''} />
-            {label}
+            {active && (
+              <div className="absolute -top-2 left-1/2 -translate-x-1/2 w-8 h-1 bg-accent rounded-b-md md:top-auto md:-left-0 md:translate-x-0 md:w-1 md:h-8 md:top-1/2 md:-translate-y-1/2 md:rounded-r-md md:rounded-b-none" />
+            )}
+            <Icon size={20} className={cn("mb-1", active && "drop-shadow-[0_0_8px_rgba(65,214,255,0.5)]")} />
+            <span className="text-[10px] font-sans font-medium uppercase tracking-wider">{label}</span>
           </Link>
         );
       })}
-
-      <div className="mt-auto pt-6 px-3">
-        <div className="text-xs text-slate-600 space-y-1">
-          <p className="font-semibold text-slate-500">Algorithms Used</p>
-          <p>• Dijkstra (O((V+E) log V))</p>
-          <p>• A* with Euclidean h(n)</p>
-          <p>• Greedy Scheduling</p>
-          <p>• Priority Queue (Min-Heap)</p>
-        </div>
-      </div>
     </aside>
   );
 }

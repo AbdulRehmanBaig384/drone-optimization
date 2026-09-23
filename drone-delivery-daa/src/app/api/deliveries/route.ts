@@ -1,6 +1,6 @@
 // src/app/api/deliveries/route.ts
 import { NextRequest, NextResponse } from 'next/server';
-import { listDeliveries, createDelivery, removeDelivery, markDelivered } from '@/services/deliveryService';
+import { listDeliveries, createDelivery, removeDelivery, markDelivered, unassignDelivery } from '@/services/deliveryService';
 
 export async function GET() {
   try {
@@ -44,6 +44,9 @@ export async function PATCH(req: NextRequest) {
     if (!id) return NextResponse.json({ error: 'id required' }, { status: 400 });
     if (action === 'deliver') {
       const delivery = await markDelivered(Number(id));
+      return NextResponse.json(delivery);
+    } else if (action === 'unassign') {
+      const delivery = await unassignDelivery(Number(id));
       return NextResponse.json(delivery);
     }
     return NextResponse.json({ error: 'unknown action' }, { status: 400 });

@@ -4,8 +4,7 @@
 
 import { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import Navbar from '@/components/layout/Navbar';
-import Sidebar from '@/components/layout/Sidebar';
+// Removed Sidebar and Navbar imports
 import RouteHighlight from '@/components/graph/RouteHighlight';
 import { useSimulationStore } from '@/store/simulationStore';
 import type { Location, Edge } from '@/types';
@@ -36,48 +35,57 @@ export default function CityMapPage() {
   }, []);
 
   return (
-    <div className="flex min-h-screen">
-      <Sidebar />
-      <div className="flex-1 flex flex-col">
-        <Navbar />
-        <main className="flex-1 p-6">
-          <div className="mb-6">
-            <h1 className="text-2xl font-bold text-slate-100">City Map</h1>
-            <p className="text-slate-400 text-sm mt-1">
-              Graph visualization of all city locations and delivery routes.
-              Run a simulation to see highlighted paths.
-            </p>
-          </div>
-
-          {loading ? (
-            <div className="h-[520px] flex items-center justify-center text-slate-500">
-              Loading city graph...
-            </div>
-          ) : locations.length === 0 ? (
-            <div className="p-6 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-sm">
-              ⚠️ No locations found. Run the seed SQL in Supabase to populate the database.
-            </div>
-          ) : (
-            <>
-              <div className="rounded-xl overflow-hidden" style={{ height: 540 }}>
-                <CityGraphView
-                  locations={locations}
-                  edges={edges}
-                  highlightedPath={highlightedPath}
-                />
-              </div>
-              <RouteHighlight locations={locations} />
-            </>
-          )}
-
-          {/* Graph stats */}
-          <div className="mt-4 flex gap-4 text-xs text-slate-500">
-            <span>Nodes (V): <span className="text-slate-300">{locations.length}</span></span>
-            <span>Edges (E): <span className="text-slate-300">{edges.length}</span></span>
-            <span>Graph space: <span className="text-slate-300">O(V+E) = O({locations.length + edges.length})</span></span>
-          </div>
-        </main>
+    <>
+      <div className="mb-6">
+        <h1 className="text-2xl md:text-3xl font-bold font-display text-text-main">City Sector Map</h1>
+        <p className="text-text-dim text-sm mt-1 max-w-xl">
+          Graph visualization of all city locations and delivery routes.
+          Run a simulation to see highlighted paths.
+        </p>
       </div>
-    </div>
+
+      {loading ? (
+        <div className="h-[520px] flex items-center justify-center text-text-dim glass-card">
+          <div className="flex flex-col items-center gap-4">
+            <div className="w-8 h-8 rounded-full border-2 border-accent border-t-transparent animate-spin" />
+            <span>Establishing telemetry...</span>
+          </div>
+        </div>
+      ) : locations.length === 0 ? (
+        <div className="p-4 rounded-xl bg-critical/10 border border-critical/30 text-critical text-sm flex items-center gap-3">
+          <span className="text-lg">⚠️</span>
+          <span>No nodes found. Run the seed SQL to populate the sector database.</span>
+        </div>
+      ) : (
+        <>
+          <div className="rounded-xl overflow-hidden shadow-2xl shadow-black/40 border border-border-theme relative" style={{ height: 540 }}>
+            <CityGraphView
+              locations={locations}
+              edges={edges}
+              highlightedPath={highlightedPath}
+            />
+          </div>
+          <div className="mt-4">
+            <RouteHighlight locations={locations} />
+          </div>
+        </>
+      )}
+
+      {/* Graph stats */}
+      <div className="mt-6 flex flex-wrap gap-4 text-xs font-mono text-text-faint p-4 bg-surface-2/40 rounded-lg border border-border-theme w-fit">
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-accent" />
+          <span>Nodes (V): <span className="text-text-main font-bold">{locations.length}</span></span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-energy" />
+          <span>Edges (E): <span className="text-text-main font-bold">{edges.length}</span></span>
+        </div>
+        <div className="flex items-center gap-2">
+          <span className="w-2 h-2 rounded-full bg-success" />
+          <span>Graph complexity: <span className="text-text-main font-bold">O({locations.length + edges.length})</span></span>
+        </div>
+      </div>
+    </>
   );
 }

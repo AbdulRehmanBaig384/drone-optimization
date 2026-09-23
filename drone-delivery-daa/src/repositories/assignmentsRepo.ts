@@ -48,3 +48,12 @@ export async function insertAssignment(
   if (error) throw new Error(`assignmentsRepo.insertAssignment: ${error.message}`);
   return data as Assignment;
 }
+
+export async function deleteAssignmentByDelivery(deliveryId: number): Promise<void> {
+  const supabase = createServerClient();
+  const { error } = await supabase
+    .from('assignments')
+    .delete()
+    .eq('delivery_id', deliveryId);
+  if (error) throw new Error(`assignmentsRepo.deleteAssignmentByDelivery: ${error.message}`);
+}

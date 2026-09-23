@@ -50,11 +50,11 @@ export default function DeliveryForm({ locations, onCreated }: DeliveryFormProps
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1">Destination</label>
+        <label className="block text-[11px] font-bold font-mono text-text-faint mb-1.5 uppercase tracking-wider">Destination</label>
         <select
           value={destination}
           onChange={(e) => setDestination(e.target.value)}
-          className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-sky-500"
+          className="w-full px-4 py-2.5 rounded-lg bg-surface-2 border border-border-theme text-sm text-text-main focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner"
         >
           {locations.map((l) => (
             <option key={l.id} value={l.id}>{l.name}</option>
@@ -62,11 +62,11 @@ export default function DeliveryForm({ locations, onCreated }: DeliveryFormProps
         </select>
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1">Priority</label>
+        <label className="block text-[11px] font-bold font-mono text-text-faint mb-1.5 uppercase tracking-wider">Priority</label>
         <select
           value={priority}
           onChange={(e) => setPriority(e.target.value)}
-          className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-sky-500"
+          className="w-full px-4 py-2.5 rounded-lg bg-surface-2 border border-border-theme text-sm text-text-main focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner"
         >
           {[1, 2, 3, 4, 5].map((p) => (
             <option key={p} value={p}>{priorityLabels[p]}</option>
@@ -74,21 +74,21 @@ export default function DeliveryForm({ locations, onCreated }: DeliveryFormProps
         </select>
       </div>
       <div>
-        <label className="block text-xs font-medium text-slate-400 mb-1">Package Weight (kg)</label>
+        <label className="block text-[11px] font-bold font-mono text-text-faint mb-1.5 uppercase tracking-wider">Package Weight (kg)</label>
         <input
           type="number" min="0.1" step="0.1" required
           value={weight}
           onChange={(e) => setWeight(e.target.value)}
-          className="w-full px-3 py-2 rounded-lg bg-slate-800 border border-slate-700 text-sm text-slate-100 focus:outline-none focus:border-sky-500"
+          className="w-full px-4 py-2.5 rounded-lg bg-surface-2 border border-border-theme text-sm text-text-main focus:outline-none focus:border-accent focus:ring-1 focus:ring-accent transition-all shadow-inner font-mono"
         />
       </div>
-      {error && <p className="text-xs text-red-400">{error}</p>}
+      {error && <p className="text-xs text-critical font-medium">{error}</p>}
       <button
         type="submit"
         disabled={loading}
-        className="w-full py-2 rounded-lg bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-colors disabled:opacity-50"
+        className="w-full py-2.5 rounded-lg bg-accent text-bg-elev font-bold text-sm hover:bg-accent/90 transition-all shadow-[0_0_15px_rgba(65,214,255,0.2)] disabled:opacity-50 disabled:shadow-none uppercase tracking-wide mt-2"
       >
-        {loading ? 'Creating...' : 'Create Delivery Request'}
+        {loading ? 'Transmitting...' : 'Create Manifest'}
       </button>
     </form>
   );

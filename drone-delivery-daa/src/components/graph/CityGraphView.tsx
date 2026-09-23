@@ -53,31 +53,37 @@ export default function CityGraphView({
   }, [rebuildGraph]);
 
   return (
-    <div style={{ width: '100%', height: '100%', minHeight: 520 }} className="rounded-xl overflow-hidden border border-slate-700/50">
+    <div style={{ width: '100%', height: '100%', minHeight: 520 }} className="rounded-xl overflow-hidden border border-border-theme">
       <style>{`
         .city-node { cursor: pointer; }
         .city-node-inner {
-          background: linear-gradient(135deg, #1e293b, #0f172a);
-          border: 1.5px solid #334155;
-          border-radius: 10px;
+          background: #131E36;
+          border: 1px solid #263355;
+          border-radius: 8px;
           padding: 8px 14px;
           display: flex;
           flex-direction: column;
           align-items: center;
           gap: 2px;
           min-width: 90px;
-          box-shadow: 0 4px 24px rgba(0,0,0,0.4);
-          transition: border-color 0.2s;
+          box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+          transition: all 0.2s;
         }
-        .city-node-inner:hover { border-color: #38bdf8; }
+        .city-node-inner:hover {
+          border-color: #41D6FF;
+          box-shadow: 0 0 12px rgba(65, 214, 255, 0.2);
+          transform: translateY(-2px);
+        }
         .city-node-id {
           font-size: 10px;
-          color: #38bdf8;
+          color: #5C6A8C;
           font-family: monospace;
+          letter-spacing: 1px;
         }
         .city-node-label {
           font-size: 12px;
-          color: #e2e8f0;
+          color: #E8ECF6;
+          font-family: var(--font-display);
           font-weight: 600;
           text-align: center;
         }
@@ -90,14 +96,14 @@ export default function CityGraphView({
         nodeTypes={nodeTypes}
         fitView
         attributionPosition="bottom-left"
-        style={{ background: '#0a0f1e' }}
+        style={{ background: '#0A1120' }}
       >
-        <Background color="#1e293b" gap={24} />
+        <Background color="#131E36" gap={24} />
         <Controls className="react-flow-controls" />
         <MiniMap
-          nodeColor="#1e40af"
-          maskColor="rgba(0,0,0,0.6)"
-          style={{ background: '#0f172a', border: '1px solid #334155' }}
+          nodeColor="#1A2745"
+          maskColor="rgba(10, 17, 32, 0.7)"
+          style={{ background: '#0E1626', border: '1px solid #263355', borderRadius: '8px' }}
         />
       </ReactFlow>
     </div>

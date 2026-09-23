@@ -28,29 +28,29 @@ export function capitalize(s: string): string {
 /** Status color mapping for UI badges */
 export function statusColor(status: string): string {
   const map: Record<string, string> = {
-    available: 'text-emerald-400',
-    in_flight: 'text-sky-400',
-    charging:  'text-amber-400',
-    offline:   'text-red-400',
-    pending:   'text-slate-400',
+    available: 'text-success',
+    in_flight: 'text-accent',
+    charging:  'text-energy',
+    offline:   'text-critical',
+    pending:   'text-text-dim',
     assigned:  'text-violet-400',
-    delivered: 'text-emerald-400',
-    failed:    'text-red-400',
+    delivered: 'text-success',
+    failed:    'text-critical',
   };
-  return map[status] ?? 'text-slate-400';
+  return map[status] ?? 'text-text-faint';
 }
 
 /** Status badge background color */
 export function statusBg(status: string): string {
   const map: Record<string, string> = {
-    available: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20',
-    in_flight: 'bg-sky-400/10 text-sky-400 border-sky-400/20',
-    charging:  'bg-amber-400/10 text-amber-400 border-amber-400/20',
-    offline:   'bg-red-400/10 text-red-400 border-red-400/20',
-    pending:   'bg-slate-400/10 text-slate-400 border-slate-400/20',
-    assigned:  'bg-violet-400/10 text-violet-400 border-violet-400/20',
-    delivered: 'bg-emerald-400/10 text-emerald-400 border-emerald-400/20',
-    failed:    'bg-red-400/10 text-red-400 border-red-400/20',
+    available: 'bg-success/10 text-success border-success/20 shadow-[0_0_10px_rgba(57,217,138,0.1)]',
+    in_flight: 'bg-accent/10 text-accent border-accent/20 shadow-[0_0_10px_rgba(65,214,255,0.1)]',
+    charging:  'bg-energy/10 text-energy border-energy/20 shadow-[0_0_10px_rgba(255,180,84,0.1)]',
+    offline:   'bg-critical/10 text-critical border-critical/20 shadow-[0_0_10px_rgba(255,107,129,0.1)]',
+    pending:   'bg-surface-2 text-text-dim border-border-theme',
+    assigned:  'bg-violet-500/10 text-violet-400 border-violet-500/20 shadow-[0_0_10px_rgba(139,92,246,0.1)]',
+    delivered: 'bg-success/10 text-success border-success/20 shadow-[0_0_10px_rgba(57,217,138,0.1)]',
+    failed:    'bg-critical/10 text-critical border-critical/20 shadow-[0_0_10px_rgba(255,107,129,0.1)]',
   };
-  return map[status] ?? 'bg-slate-400/10 text-slate-400 border-slate-400/20';
+  return map[status] ?? 'bg-surface-2 text-text-faint border-border-theme';
 }

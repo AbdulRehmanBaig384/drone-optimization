@@ -7,15 +7,15 @@ import { cn } from '@/lib/utils';
 import type { SimulationLogEntry } from '@/types';
 
 const typeConfig: Record<SimulationLogEntry['type'], { icon: string; color: string; bg: string }> = {
-  graph_built:       { icon: '🗺️', color: 'text-blue-300',   bg: 'bg-blue-500/10 border-blue-500/20' },
-  queue_loaded:      { icon: '📋', color: 'text-violet-300', bg: 'bg-violet-500/10 border-violet-500/20' },
-  delivery_selected: { icon: '📦', color: 'text-amber-300',  bg: 'bg-amber-500/10 border-amber-500/20' },
-  drone_selected:    { icon: '🤖', color: 'text-sky-300',    bg: 'bg-sky-500/10 border-sky-500/20' },
-  route_computed:    { icon: '🛤️', color: 'text-emerald-300',bg: 'bg-emerald-500/10 border-emerald-500/20' },
-  feasibility_check: { icon: '⚡', color: 'text-orange-300', bg: 'bg-orange-500/10 border-orange-500/20' },
-  assignment_saved:  { icon: '✅', color: 'text-green-300',  bg: 'bg-green-500/10 border-green-500/20' },
-  error:             { icon: '❌', color: 'text-red-300',    bg: 'bg-red-500/10 border-red-500/20' },
-  info:              { icon: 'ℹ️', color: 'text-slate-400',  bg: '' },
+  graph_built:       { icon: '🗺️', color: 'text-accent',   bg: 'bg-accent/10 border-accent/30' },
+  queue_loaded:      { icon: '📋', color: 'text-violet-400', bg: 'bg-violet-500/10 border-violet-500/30' },
+  delivery_selected: { icon: '📦', color: 'text-energy',  bg: 'bg-energy/10 border-energy/30' },
+  drone_selected:    { icon: '🤖', color: 'text-accent',    bg: 'bg-accent/10 border-accent/30' },
+  route_computed:    { icon: '🛤️', color: 'text-success',bg: 'bg-success/10 border-success/30' },
+  feasibility_check: { icon: '⚡', color: 'text-amber-400', bg: 'bg-amber-400/10 border-amber-400/30' },
+  assignment_saved:  { icon: '✅', color: 'text-emerald-400',  bg: 'bg-emerald-400/10 border-emerald-400/30' },
+  error:             { icon: '❌', color: 'text-critical',    bg: 'bg-critical/10 border-critical/30' },
+  info:              { icon: 'ℹ️', color: 'text-text-faint',  bg: 'bg-surface-2 border-border-theme' },
 };
 
 const daaLabels: Record<SimulationLogEntry['type'], string> = {
@@ -38,30 +38,24 @@ function RouteComparePanel({ data }: { data: Record<string, unknown> }) {
 
   return (
     <div className="mt-3 grid grid-cols-2 gap-3 text-xs">
-      <div className={cn('p-3 rounded-lg border', winner === 'dijkstra' || winner === 'tie' ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-slate-700/40 bg-slate-800/30')}>
-        <p className="font-bold text-slate-300 mb-2">🔵 Dijkstra</p>
-        <p className="text-slate-400">Cost: <span className="text-slate-200">{(d?.totalCost as number)?.toFixed(2)}</span></p>
-        <p className="text-slate-400">Distance: <span className="text-slate-200">{(d?.totalDistance as number)?.toFixed(2)} km</span></p>
-        <p className="text-slate-400">Energy: <span className="text-slate-200">{(d?.totalEnergy as number)?.toFixed(2)}</span></p>
-        <p className="text-slate-400">Nodes explored: <span className="text-slate-200">{d?.nodesExplored as number}</span></p>
-        {(d?.path as number[])?.length > 0 && (
-          <p className="text-slate-500 mt-1 font-mono">Path: [{(d.path as number[]).join('→')}]</p>
-        )}
+      <div className={cn('p-3 rounded-lg border transition-all duration-300', winner === 'dijkstra' || winner === 'tie' ? 'border-success/40 bg-success/5 shadow-[0_0_15px_rgba(57,217,138,0.1)]' : 'border-border-theme bg-surface-2')}>
+        <p className="font-bold text-text-main font-display mb-2">🔵 Dijkstra</p>
+        <p className="text-text-dim font-mono">Cost: <span className="text-text-main">{(d?.totalCost as number)?.toFixed(2)}</span></p>
+        <p className="text-text-dim font-mono">Dist: <span className="text-text-main">{(d?.totalDistance as number)?.toFixed(2)} km</span></p>
+        <p className="text-text-dim font-mono">Energy: <span className="text-text-main">{(d?.totalEnergy as number)?.toFixed(2)}</span></p>
+        <p className="text-text-dim font-mono">Nodes: <span className="text-text-main">{d?.nodesExplored as number}</span></p>
       </div>
-      <div className={cn('p-3 rounded-lg border', winner === 'astar' ? 'border-emerald-500/40 bg-emerald-500/5' : 'border-slate-700/40 bg-slate-800/30')}>
-        <p className="font-bold text-slate-300 mb-2">🟣 A* (heuristic)</p>
-        <p className="text-slate-400">Cost: <span className="text-slate-200">{(a?.totalCost as number)?.toFixed(2)}</span></p>
-        <p className="text-slate-400">Distance: <span className="text-slate-200">{(a?.totalDistance as number)?.toFixed(2)} km</span></p>
-        <p className="text-slate-400">Energy: <span className="text-slate-200">{(a?.totalEnergy as number)?.toFixed(2)}</span></p>
-        <p className="text-slate-400">Nodes explored: <span className="text-slate-200">{a?.nodesExplored as number}</span></p>
-        {(a?.path as number[])?.length > 0 && (
-          <p className="text-slate-500 mt-1 font-mono">Path: [{(a.path as number[]).join('→')}]</p>
-        )}
+      <div className={cn('p-3 rounded-lg border transition-all duration-300', winner === 'astar' ? 'border-success/40 bg-success/5 shadow-[0_0_15px_rgba(57,217,138,0.1)]' : 'border-border-theme bg-surface-2')}>
+        <p className="font-bold text-text-main font-display mb-2">🟣 A* (heuristic)</p>
+        <p className="text-text-dim font-mono">Cost: <span className="text-text-main">{(a?.totalCost as number)?.toFixed(2)}</span></p>
+        <p className="text-text-dim font-mono">Dist: <span className="text-text-main">{(a?.totalDistance as number)?.toFixed(2)} km</span></p>
+        <p className="text-text-dim font-mono">Energy: <span className="text-text-main">{(a?.totalEnergy as number)?.toFixed(2)}</span></p>
+        <p className="text-text-dim font-mono">Nodes: <span className="text-text-main">{a?.nodesExplored as number}</span></p>
       </div>
-      <div className="col-span-2 text-center text-slate-400 text-xs pt-1">
-        A* saved <span className="text-sky-300 font-bold">{nodesSaved}</span> node explorations 
-        {winner !== 'tie' && <> · Winner: <span className="font-bold text-emerald-300">{winner === 'astar' ? 'A*' : 'Dijkstra'}</span></>}
-        {winner === 'tie' && <> · <span className="text-yellow-300">Tie — same cost!</span></>}
+      <div className="col-span-2 text-center text-text-faint text-xs pt-1">
+        A* saved <span className="text-accent font-bold font-mono">{nodesSaved}</span> node explorations 
+        {winner !== 'tie' && <> · Winner: <span className="font-bold text-success font-display">{winner === 'astar' ? 'A*' : 'Dijkstra'}</span></>}
+        {winner === 'tie' && <> · <span className="text-energy font-display">Tie — same cost!</span></>}
       </div>
     </div>
   );

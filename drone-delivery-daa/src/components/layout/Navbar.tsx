@@ -31,9 +31,9 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header className="fixed top-0 left-0 right-0 md:left-[76px] h-16 border-b border-border-theme bg-bg-elev/90 backdrop-blur-md flex items-center px-4 md:px-8 justify-between z-40">
+    <header className="fixed top-0 left-0 right-0 md:left-[76px] h-16 border-b border-white/5 bg-black/40 backdrop-blur-2xl flex items-center px-4 md:px-8 justify-between z-40 shadow-[0_4px_30px_rgba(0,0,0,0.5)]">
       <div className="flex items-center gap-4">
-        <h1 className="text-lg md:text-xl font-display font-semibold text-text-main tracking-tight">
+        <h1 className="text-lg md:text-xl font-display font-semibold text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500 tracking-tight">
           {routeTitles[pathname] || 'Control Room'}
         </h1>
         {pending > 0 && (

@@ -31,7 +31,8 @@ export default function AlgorithmComparePanel() {
         const nodesSaved = (entry.data?.nodesSaved ?? 0) as number;
 
         return (
-          <div key={i} className="rounded-xl border border-border-theme bg-surface-2 p-5 shadow-lg">
+          <div key={i} className="glass-card p-5 mb-4 relative overflow-hidden group">
+            <div className="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
             <p className="text-xs font-mono text-text-dim mb-4">Route Computation #{i + 1}</p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-xs">
               {/* Dijkstra */}

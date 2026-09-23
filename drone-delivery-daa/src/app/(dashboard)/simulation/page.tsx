@@ -59,17 +59,17 @@ function AssignmentsSummary() {
 
 export default function SimulationPage() {
   return (
-    <>
+    <div className="animate-fade-in">
       {/* Header */}
       <div className="mb-6">
-        <h1 className="text-2xl md:text-3xl font-bold font-display text-text-main">Simulation Telemetry</h1>
+        <h1 className="text-2xl md:text-3xl font-bold font-display text-text-main text-transparent bg-clip-text bg-gradient-to-r from-white to-sky-300">Simulation Telemetry</h1>
         <p className="text-text-dim text-sm mt-1">
           Run the full DAA pipeline: Priority Queue → Greedy Selection → Dijkstra + A* → Energy Check → Assignment
         </p>
       </div>
 
       {/* Pipeline diagram */}
-      <div className="mb-8 p-5 rounded-xl bg-surface border border-border-theme shadow-lg">
+      <div className="mb-8 p-5 glass-card shadow-2xl shadow-sky-900/10">
         <p className="text-xs font-semibold font-display text-text-faint uppercase tracking-wider mb-4">Algorithm Pipeline</p>
         <div className="flex items-center gap-3 flex-wrap text-xs">
           {[
@@ -103,7 +103,7 @@ export default function SimulationPage() {
       <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
         <div>
           <h2 className="text-sm font-bold font-display text-text-main mb-3 uppercase tracking-wider">Decision Log</h2>
-          <div className="rounded-xl border border-border-theme bg-surface p-4 shadow-xl">
+          <div className="glass-card p-4 shadow-xl">
             <SimulationLog />
           </div>
           <AssignmentsSummary />
@@ -112,6 +112,6 @@ export default function SimulationPage() {
           <AlgorithmComparePanel />
         </div>
       </div>
-    </>
+    </div>
   );
 }

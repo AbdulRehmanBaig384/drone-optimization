@@ -18,8 +18,8 @@ export function WaypointBeacon({ type, position, label, passed }: WaypointBeacon
   const isDest = type === "destination";
   const isStart = type === "start";
   
-  const baseColor = isDest ? "#f6ad55" : isStart ? "#63b3ed" : "#4fd1c5";
-  const activeColor = passed || isStart ? baseColor : "#4a5568";
+  const baseColor = isDest ? "#ffb454" : isStart ? "#41d6ff" : "#ffffff";
+  const activeColor = passed || isStart ? baseColor : "#93a0be";
   
   useFrame((state) => {
     if (ringRef.current && (passed || isDest || isStart)) {
@@ -53,16 +53,21 @@ export function WaypointBeacon({ type, position, label, passed }: WaypointBeacon
       {/* Label */}
       <Html position={[0, 2.5, 0]} center distanceFactor={12}>
         <div style={{
-          background: isDest ? 'rgba(221, 107, 32, 0.8)' : 'rgba(49, 151, 149, 0.8)',
-          color: 'white',
-          padding: '2px 8px',
-          borderRadius: '4px',
+          background: isDest ? 'rgba(255, 180, 84, 0.15)' : 'rgba(255, 255, 255, 0.15)',
+          color: isDest ? '#ffb454' : '#ffffff',
+          padding: '4px 10px',
+          borderRadius: '6px',
           fontSize: '11px',
           fontWeight: 'bold',
           whiteSpace: 'nowrap',
-          border: `1px solid ${baseColor}`,
+          border: `1px solid ${isDest ? 'rgba(255, 180, 84, 0.4)' : 'rgba(255, 255, 255, 0.4)'}`,
+          backdropFilter: 'blur(8px)',
+          boxShadow: `0 4px 12px ${isDest ? 'rgba(255, 180, 84, 0.2)' : 'rgba(0, 0, 0, 0.3)'}`,
           pointerEvents: 'none',
-          userSelect: 'none'
+          userSelect: 'none',
+          textTransform: 'uppercase',
+          letterSpacing: '1px',
+          textShadow: '0 2px 4px rgba(0,0,0,0.8)'
         }}>
           {isDest && "DEST: "}{label}
         </div>

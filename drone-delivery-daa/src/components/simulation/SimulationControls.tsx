@@ -32,7 +32,7 @@ export default function SimulationControls() {
         id="btn-run-step"
         onClick={() => runMode('step')}
         disabled={isRunning}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-sky-600 hover:bg-sky-500 text-white text-sm font-semibold transition-colors disabled:opacity-50 shadow-lg shadow-sky-900/30"
+        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-accent/20 to-accent/10 border border-accent/40 hover:border-accent hover:bg-accent/20 text-accent text-sm font-semibold transition-all duration-300 disabled:opacity-50 hover:shadow-[0_0_20px_rgba(0,229,255,0.4)]"
       >
         {isRunning ? (
           <Loader2 size={16} className="animate-spin" />
@@ -46,7 +46,7 @@ export default function SimulationControls() {
         id="btn-run-full"
         onClick={() => runMode('full')}
         disabled={isRunning}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-violet-600 hover:bg-violet-500 text-white text-sm font-semibold transition-colors disabled:opacity-50 shadow-lg shadow-violet-900/30"
+        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-gradient-to-r from-[#FF2E93]/20 to-[#FF2E93]/10 border border-[#FF2E93]/40 hover:border-[#FF2E93] hover:bg-[#FF2E93]/20 text-[#FF2E93] text-sm font-semibold transition-all duration-300 disabled:opacity-50 hover:shadow-[0_0_20px_rgba(255,46,147,0.4)]"
       >
         {isRunning ? (
           <Loader2 size={16} className="animate-spin" />
@@ -60,7 +60,7 @@ export default function SimulationControls() {
         id="btn-clear"
         onClick={clearSimulation}
         disabled={isRunning}
-        className="flex items-center gap-2 px-4 py-2.5 rounded-xl bg-slate-700 hover:bg-slate-600 text-slate-300 text-sm font-medium transition-colors disabled:opacity-50"
+        className="flex items-center gap-2 px-6 py-2.5 rounded-full bg-white/5 hover:bg-white/10 text-white/70 hover:text-white border border-white/10 text-sm font-medium transition-all duration-300 disabled:opacity-50"
       >
         <RefreshCw size={16} />
         Clear

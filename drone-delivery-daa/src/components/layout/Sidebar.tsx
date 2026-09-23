@@ -20,9 +20,10 @@ export default function Sidebar() {
   const pathname = usePathname();
 
   return (
-    <aside className="fixed bottom-0 left-0 right-0 md:top-0 md:bottom-auto md:right-auto md:w-[76px] md:h-screen bg-bg-elev border-t md:border-t-0 md:border-r border-border-theme z-50 flex md:flex-col items-center py-2 md:py-6 px-2 md:px-0 justify-around md:justify-start md:gap-4 shadow-[0_-4px_24px_rgba(0,0,0,0.4)] md:shadow-none">
-      <div className="hidden md:flex w-10 h-10 rounded-xl bg-surface border border-border-theme items-center justify-center mb-4 shadow-lg shadow-black/20">
-        <span className="text-accent text-lg font-display font-bold">D</span>
+    <aside className="fixed bottom-0 left-0 right-0 md:top-0 md:bottom-auto md:right-auto md:w-[76px] md:h-screen bg-black/50 backdrop-blur-3xl md:rounded-none border-t md:border-t-0 md:border-r border-white/5 z-50 flex md:flex-col items-center py-2 md:py-6 px-2 md:px-0 justify-around md:justify-start md:gap-4 shadow-[0_0_30px_rgba(0,0,0,0.8)]">
+      <div className="hidden md:flex w-10 h-10 rounded-xl bg-white/5 border border-white/10 items-center justify-center mb-4 shadow-lg shadow-black/40 backdrop-blur-md relative overflow-hidden group">
+        <div className="absolute inset-0 bg-gradient-to-tr from-accent/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+        <span className="text-white text-lg font-display font-bold relative z-10 drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">D</span>
       </div>
       
       {navItems.map(({ href, icon: Icon, label }) => {
